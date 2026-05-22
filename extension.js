@@ -1,19 +1,26 @@
-import GObject from 'gi://GObject';
-import St from 'gi://St';
-import {Extension} from 'resource:///org/gnome/shell/extensions/extension.js';
-import {panel} from 'resource:///org/gnome/shell/ui/panel.js';
+import { Extension } from 'resource:///org/gnome/shell/extensions/extension.js';
+import { PanelIndicator } from './panelIndicator.js';
+import { PopupWidget } from './popupWidget.js';
+import { UsageTracker } from './usageTracker.js';
+import { UsageStore } from './usageStore.js';
 
-export default class AIUsageMonitorExtension extends Extension {
+export default class ScreenTimeExtension extends Extension {
     enable() {
-        this._indicator = new St.Label({
-            text: '🤖 0',
-            y_align: St.Align.MIDDLE,
-        });
-        panel.addToStatusArea(this.uuid, this._indicator);
+        this._store = new UsageStore();
+        this._indicator = new PanelIndicator();
+        this._indicator.addToPanel(this.uuid);
+        this._popup = new PopupWidget(this._indicator.menu, this._store);
+        this._tracker = new UsageTracker(this._store);
     }
 
     disable() {
+        this._tracker?.destroy();
+        this._tracker = null;
+        this._popup?.destroy();
+        this._popup = null;
         this._indicator?.destroy();
         this._indicator = null;
+        this._store?.destroy();
+        this._store = null;
     }
 }

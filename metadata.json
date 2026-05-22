@@ -1,8 +1,8 @@
 {
-  "name": "AI Usage Monitor",
-  "description": "Monitor AI model token usage (DeepSeek, OpenAI, etc.) in GNOME panel",
-  "uuid": "ai-usage-monitor@chalmery",
+  "name": "Screen Time",
+  "description": "Track application usage time in GNOME panel",
+  "uuid": "screen-time@chalmery",
   "shell-version": ["47", "48"],
   "version": 1,
-  "url": "https://github.com/chalmery/ai-usage-monitor"
+  "url": "https://github.com/chalmery/screen-time"
 }

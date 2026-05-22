@@ -1,0 +1,91 @@
+<h2>GNOME 面板展示方式 — 三种设计</h2>
+<p class="subtitle">选取你最倾向的面板展示风格</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="dropdown" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">设计 A：下拉菜单模式</div>
+        <div class="mockup-body">
+          <!-- GNOME top bar simulation -->
+          <div style="background:#1a1a1a;border-radius:6px;padding:6px 12px;display:flex;align-items:center;gap:12px;color:#eee;font-family:mono;font-size:11px;justify-content:flex-end;">
+            <span style="color:#999;">🔊</span>
+            <span style="color:#999;">📶</span>
+            <span style="color:#999;">🔋</span>
+            <span style="color:#999;">17:30</span>
+            <span style="background:#2d2d2d;padding:2px 8px;border-radius:4px;font-weight:bold;">🤖 1.2K</span>
+          </div>
+          <!-- Dropdown popup -->
+          <div style="background:#222;border-radius:6px;margin-top:4px;padding:10px 14px;color:#eee;font-size:11px;line-height:1.8;border:1px solid #444;font-family:mono;">
+            <div style="color:#aaa;margin-bottom:4px;">📊 DeepSeek 用量</div>
+            <div>🪙 Token：<b>1,234,567</b></div>
+            <div>💰 费用：<b>¥4.32</b></div>
+            <div>📤 请求：<b>47 次</b></div>
+            <div style="border-top:1px solid #444;margin-top:6px;padding-top:4px;color:#888;">🔄 5 分钟前更新</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>下拉菜单模式</h3>
+      <p>面板只显示图标+今日总token，点击弹出下拉菜单查看完整信息。最节省面板空间。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="flat" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">设计 B：平铺模式</div>
+        <div class="mockup-body">
+          <div style="background:#1a1a1a;border-radius:6px;padding:6px 12px;display:flex;align-items:center;gap:12px;color:#eee;font-family:mono;font-size:11px;justify-content:flex-end;">
+            <span style="color:#999;">🔊</span>
+            <span style="color:#999;">📶</span>
+            <span style="color:#999;">🔋</span>
+            <span style="background:#2d2d2d;padding:2px 8px;border-radius:4px;">🤖 1.2K</span>
+            <span style="background:#2d2d2d;padding:2px 8px;border-radius:4px;">¥4.32</span>
+            <span style="background:#2d2d2d;padding:2px 8px;border-radius:4px;">47次</span>
+            <span style="color:#999;">17:30</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>平铺模式</h3>
+      <p>三组数据全部直接显示在面板上，一目了然。占用更多面板空间，可能和时钟等挤在一起。</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="switchable" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="mockup">
+        <div class="mockup-header">设计 C：可切换模式</div>
+        <div class="mockup-body">
+          <div style="background:#1a1a1a;border-radius:6px;padding:6px 12px;display:flex;align-items:center;gap:12px;color:#eee;font-family:mono;font-size:11px;justify-content:flex-end;">
+            <span style="color:#999;">🔊</span>
+            <span style="color:#999;">📶</span>
+            <span style="color:#999;">🔋</span>
+            <span style="background:#2d2d2d;padding:2px 8px;border-radius:4px;font-weight:bold;">🤖 ¥4.32</span>
+            <span style="color:#999;">17:30</span>
+          </div>
+          <div style="text-align:center;color:#888;font-size:10px;margin-top:6px;font-family:mono;">
+            点击切换：Token ⇄ 费用 ⇄ 请求次数
+          </div>
+          <div style="background:#222;border-radius:6px;margin-top:4px;padding:10px 14px;color:#eee;font-size:11px;line-height:1.8;border:1px solid #444;font-family:mono;">
+            <div style="color:#aaa;margin-bottom:4px;">🔽 点击面板可切换显示</div>
+            <div style="display:flex;gap:8px;">
+              <span style="background:#333;padding:1px 6px;border-radius:3px;">🤖 1.2K</span>
+              <span style="background:#2d5330;padding:1px 6px;border-radius:3px;color:#8f8;">💰 ¥4.32 ✓</span>
+              <span style="background:#333;padding:1px 6px;border-radius:3px;">📤 47次</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>可切换模式</h3>
+      <p>面板显示一个指标，点击切换显示不同数据。节省空间的同时可以快速查看各项。</p>
+    </div>
+  </div>
+
+</div>

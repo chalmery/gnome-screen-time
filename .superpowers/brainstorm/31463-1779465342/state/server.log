@@ -1,2 +1,21 @@
 {"type":"server-started","port":61580,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:61580","screen_dir":"/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/content","state_dir":"/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/state"}
 {"type":"screen-added","file":"/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/content/popup-designs.html"}
+{"type":"screen-added","file":"/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/content/waiting.html"}
+{"type":"server-stopped","reason":"owner process exited"}
+node:fs:2414
+    return binding.writeFileUtf8(
+                   ^
+
+Error: ENOENT: no such file or directory, open '/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/state/server-stopped'
+    at Object.writeFileSync (node:fs:2414:20)
+    at shutdown (/home/yangcc/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/server.cjs:305:8)
+    at Timeout._onTimeout (/home/yangcc/.claude/plugins/cache/claude-plugins-official/superpowers/5.1.0/skills/brainstorming/scripts/server.cjs:321:24)
+    at listOnTimeout (node:internal/timers:605:17)
+    at process.processTimers (node:internal/timers:541:7) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/home/yangcc/code/gnome/ai-usage-monitor/.superpowers/brainstorm/31463-1779465342/state/server-stopped'
+}
+
+Node.js v24.15.0

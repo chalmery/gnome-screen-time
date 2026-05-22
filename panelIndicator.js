@@ -1,6 +1,6 @@
 import St from 'gi://St';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
-import { panel } from 'resource:///org/gnome/shell/ui/panel.js';
+import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
 const DOT_BLUE = '#3584e4';
 const DOT_GRAY = '#999999';
@@ -19,7 +19,7 @@ export class PanelIndicator {
     }
 
     addToPanel(uuid) {
-        panel.addToStatusArea(uuid, this._button);
+        Main.panel.addToStatusArea(uuid, this._button);
     }
 
     setTracking(active) {

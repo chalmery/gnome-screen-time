@@ -73,5 +73,7 @@ export default class ScreenTimePreferences extends ExtensionPreferences {
             settings.set_enum('language', langRow.selected);
         });
         langGroup.add(langRow);
+
+        window.set_focus(null);
     }
 }

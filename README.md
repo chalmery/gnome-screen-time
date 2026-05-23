@@ -7,7 +7,6 @@
 
 GNOME Shell 面板上的应用使用时间追踪器，类似 macOS 的屏幕使用时间。
 
-[<img src="https://raw.githubusercontent.com/extensions-gnome/resources/main/button/get-on-gnome-extensions.svg" height="64">](https://extensions.gnome.org/extension/10031/screen-time/)
 
 ## 功能
 

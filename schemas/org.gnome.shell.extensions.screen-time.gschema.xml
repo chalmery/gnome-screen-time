@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist>
+  <enum id="org.gnome.shell.extensions.screen-time.language">
+    <value nick="default" value="0"/>
+    <value nick="zh_CN" value="1"/>
+    <value nick="en" value="2"/>
+  </enum>
+  <schema id="org.gnome.shell.extensions.screen-time"
+          path="/org/gnome/shell/extensions/screen-time/">
+    <key name="retention-days" type="i">
+      <default>90</default>
+      <range min="0" max="365"/>
+      <summary>Data retention days</summary>
+      <description>Number of days to keep usage data. 0 means keep forever.</description>
+    </key>
+    <key name="max-interval" type="i">
+      <default>600</default>
+      <range min="60" max="3600"/>
+      <summary>Max tracking interval (seconds)</summary>
+      <description>Maximum interval between focus events before capping to prevent skewed data after suspend.</description>
+    </key>
+    <key name="language" enum="org.gnome.shell.extensions.screen-time.language">
+      <default>"default"</default>
+      <summary>Interface language</summary>
+      <description>Override interface language. Default follows system language.</description>
+    </key>
+  </schema>
+</schemalist>

@@ -33,6 +33,9 @@ msgstr ""
 msgid "m"
 msgstr ""
 
+msgid "Other %d apps"
+msgstr ""
+
 msgid "Data Retention"
 msgstr ""
 

@@ -6,6 +6,7 @@ const ROW_W = 230;
 const BAR_W = ROW_W - 16;
 const BAR_BG = 'rgba(255,255,255,0.12)';
 const BAR_FG = '#eee';
+const MAX_VISIBLE = 5;
 
 export class PopupWidget {
     constructor(menu, store) {
@@ -34,16 +35,16 @@ export class PopupWidget {
         let header = new PopupMenu.PopupBaseMenuItem({activate: false});
         header.track_hover = false;
         let headerBox = new St.BoxLayout({vertical: true,
-            style: 'padding: 4px 0;'});
+            style: 'padding: 2px 0;'});
         let title = new St.Label({
             text: _('Screen Time'),
-            style: 'font-size: 13px; font-weight: 700;',
+            style: 'font-size: 12px; font-weight: 700;',
         });
         headerBox.add_child(title);
         if (total > 0) {
             let sub = new St.Label({
                 text: this._rangeLabel() + ' ' + this._formatTime(total),
-                style: 'font-size: 11px; margin-top: 1px; color: #999;',
+                style: 'font-size: 10px; margin-top: 1px; color: #999;',
             });
             headerBox.add_child(sub);
         }
@@ -62,8 +63,17 @@ export class PopupWidget {
             }));
             this._menu.addMenuItem(empty);
         } else {
-            for (let app of usage) {
+            let topApps = usage.slice(0, MAX_VISIBLE);
+            let otherApps = usage.slice(MAX_VISIBLE);
+
+            for (let app of topApps) {
                 this._addAppRow(app, total);
+            }
+
+            if (otherApps.length > 0) {
+                let otherTotal = otherApps.reduce((s, a) => s + a.seconds, 0);
+                let otherPct = Math.round(otherTotal / total * 100);
+                this._addOtherAppsRow(otherApps, otherTotal, otherPct, total);
             }
         }
 
@@ -81,13 +91,13 @@ export class PopupWidget {
 
         let row = new St.BoxLayout({
             vertical: true,
-            style: 'padding: 4px 8px; width: ' + ROW_W + 'px;',
+            style: 'padding: 3px 6px; width: ' + ROW_W + 'px;',
         });
 
         let topRow = new St.BoxLayout();
         let nameLabel = new St.Label({
             text: app.displayName,
-            style: 'font-size: 12px; font-weight: 600;',
+            style: 'font-size: 11px; font-weight: 600;',
         });
         topRow.add_child(nameLabel);
 
@@ -96,18 +106,18 @@ export class PopupWidget {
 
         let infoLabel = new St.Label({
             text: this._formatTime(app.seconds) + ' · ' + pct + '%',
-            style: 'font-size: 11px; font-weight: 600; color: ' + BAR_FG + ';',
+            style: 'font-size: 10px; font-weight: 600; color: ' + BAR_FG + ';',
         });
         topRow.add_child(infoLabel);
         row.add_child(topRow);
 
         // Progress bar
         let barContainer = new St.BoxLayout({
-            style: 'margin-top: 3px; height: 3px; width: ' + BAR_W + 'px; ' +
+            style: 'margin-top: 2px; height: 2px; width: ' + BAR_W + 'px; ' +
                    'background-color: ' + BAR_BG + '; border-radius: 2px;',
         });
         let barFill = new St.Widget({
-            style: 'height: 3px; background-color: ' + BAR_FG + '; border-radius: 2px;',
+            style: 'height: 2px; background-color: ' + BAR_FG + '; border-radius: 2px;',
             x_expand: false,
         });
         barFill.set_width(fillW);
@@ -116,6 +126,79 @@ export class PopupWidget {
 
         item.add_child(row);
         this._menu.addMenuItem(item);
+        return item;
+    }
+
+    _addOtherAppsRow(otherApps, otherTotal, otherPct, total) {
+        let item = new PopupMenu.PopupBaseMenuItem({activate: false});
+        item.track_hover = false;
+        let fillW = Math.round(BAR_W * otherPct / 100);
+
+        let row = new St.BoxLayout({
+            vertical: true,
+            style: 'padding: 3px 6px; width: ' + ROW_W + 'px;',
+        });
+
+        let topRow = new St.BoxLayout();
+        let nameLabel = new St.Label({
+            text: _('Other %d apps').replace('%d', otherApps.length.toString()),
+            style: 'font-size: 11px; font-weight: 600;',
+        });
+        topRow.add_child(nameLabel);
+
+        let spacer = new St.BoxLayout({x_expand: true});
+        topRow.add_child(spacer);
+
+        let infoLabel = new St.Label({
+            text: this._formatTime(otherTotal) + ' · ' + otherPct + '%',
+            style: 'font-size: 10px; font-weight: 600; color: ' + BAR_FG + ';',
+        });
+        topRow.add_child(infoLabel);
+
+        let expandArrow = new St.Label({
+            text: ' ▸',
+            style: 'font-size: 10px; color: ' + BAR_FG + ';',
+        });
+        topRow.add_child(expandArrow);
+        row.add_child(topRow);
+
+        let barContainer = new St.BoxLayout({
+            style: 'margin-top: 2px; height: 2px; width: ' + BAR_W + 'px; ' +
+                   'background-color: ' + BAR_BG + '; border-radius: 2px;',
+        });
+        let barFill = new St.Widget({
+            style: 'height: 2px; background-color: ' + BAR_FG + '; border-radius: 2px;',
+        });
+        barFill.set_width(fillW);
+        barContainer.add_child(barFill);
+        row.add_child(barContainer);
+
+        let btn = new St.Button({
+            child: row,
+            style: 'padding: 0;',
+        });
+        item.add_child(btn);
+        this._menu.addMenuItem(item);
+
+        let expanded = false;
+        let otherItems = [];
+
+        for (let app of otherApps) {
+            let appItem = this._addAppRow(app, total);
+            appItem.actor.hide();
+            otherItems.push(appItem);
+        }
+
+        btn.connect('clicked', () => {
+            expanded = !expanded;
+            expandArrow.text = expanded ? ' ▾' : ' ▸';
+            for (let oi of otherItems) {
+                if (expanded)
+                    oi.actor.show();
+                else
+                    oi.actor.hide();
+            }
+        });
     }
 
     _addDateTabs() {
@@ -162,8 +245,10 @@ export class PopupWidget {
     _formatTime(totalSecs) {
         let h = Math.floor(totalSecs / 3600);
         let m = Math.floor((totalSecs % 3600) / 60);
+        if (h > 0 && m > 0)
+            return h + _('h') + m + _('m');
         if (h > 0)
-            return h + _('h') + ' ' + m + _('m');
+            return h + _('h');
         return m + _('m');
     }
 

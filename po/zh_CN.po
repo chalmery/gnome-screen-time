@@ -36,6 +36,9 @@ msgstr "小时"
 msgid "m"
 msgstr "分钟"
 
+msgid "Other %d apps"
+msgstr "其他 %d 个应用"
+
 # prefs.js
 msgid "Data Retention"
 msgstr "数据保留"

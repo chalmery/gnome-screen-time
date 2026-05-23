@@ -1,0 +1,36 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: gnome-screen-time\n"
+"POT-Creation-Date: 2026-05-23 11:00+0800\n"
+"PO-Revision-Date: 2026-05-23 11:00+0800\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Screen Time"
+msgstr "Screen Time"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Yesterday"
+msgstr "Yesterday"
+
+msgid "This Week"
+msgstr "This Week"
+
+msgid "This Month"
+msgstr "This Month"
+
+msgid "No Data"
+msgstr "No Data"
+
+msgid "h"
+msgstr "h"
+
+msgid "m"
+msgstr "m"

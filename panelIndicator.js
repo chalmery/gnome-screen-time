@@ -10,7 +10,7 @@ export const PanelIndicator = class extends PanelMenu.Button {
     }
 
     _init() {
-        super._init(0.0, _('Screen Time'));
+        super._init(0.5, _('Screen Time'));
 
         const hbox = new St.BoxLayout({
             style_class: 'panel-status-menu-box',

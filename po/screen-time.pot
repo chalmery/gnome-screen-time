@@ -33,9 +33,6 @@ msgstr ""
 msgid "m"
 msgstr ""
 
-msgid "s"
-msgstr ""
-
 msgid "Data Retention"
 msgstr ""
 

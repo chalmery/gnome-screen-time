@@ -27,7 +27,7 @@ export class PopupWidget {
 
     _build() {
         this._menu.removeAll();
-        let usage = this._store.getUsage(this._range).filter(a => a.seconds >= 15);
+        let usage = this._store.getUsage(this._range).filter(a => a.seconds >= 60);
         let total = usage.reduce((s, a) => s + a.seconds, 0);
 
         // Header
@@ -162,12 +162,9 @@ export class PopupWidget {
     _formatTime(totalSecs) {
         let h = Math.floor(totalSecs / 3600);
         let m = Math.floor((totalSecs % 3600) / 60);
-        let s = Math.floor(totalSecs % 60);
         if (h > 0)
             return h + _('h') + ' ' + m + _('m');
-        if (m > 0)
-            return m + _('m') + ' ' + s + _('s');
-        return s + _('s');
+        return m + _('m');
     }
 
     destroy() {

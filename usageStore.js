@@ -5,11 +5,11 @@ const STORE_DIR = GLib.build_filenamev([
     GLib.get_user_data_dir(), 'gnome-shell', 'screen-time'
 ]);
 const STORE_FILE = GLib.build_filenamev([STORE_DIR, 'usage.json']);
-const RETENTION_DAYS = 90;
 const AUTOSAVE_INTERVAL = 30;
 
 export class UsageStore {
-    constructor() {
+    constructor(settings) {
+        this._settings = settings;
         this._data = {};
         this._dirty = false;
         this._ensureDir();
@@ -18,6 +18,13 @@ export class UsageStore {
             GLib.PRIORITY_DEFAULT, AUTOSAVE_INTERVAL,
             () => { this._save(); return GLib.SOURCE_CONTINUE; }
         );
+        this._settingsId = settings.connect(
+            'changed::retention-days', () => { this._cleanup(); }
+        );
+    }
+
+    _getRetentionDays() {
+        return this._settings.get_int('retention-days');
     }
 
     _ensureDir() {
@@ -56,7 +63,9 @@ export class UsageStore {
     }
 
     _cleanup() {
-        let cutoff = GLib.DateTime.new_now_local().add_days(-RETENTION_DAYS);
+        let days = this._getRetentionDays();
+        if (days <= 0) return;
+        let cutoff = GLib.DateTime.new_now_local().add_days(-days);
         let cutoffKey = cutoff.format('%Y-%m-%d');
         for (let key in this._data) {
             if (key < cutoffKey) {
@@ -107,7 +116,6 @@ export class UsageStore {
             dates.push(now.add_days(-1).format('%Y-%m-%d'));
             break;
         case 'week': {
-            // GLib: 1=Mon ... 7=Sun; offset days back to Monday
             let offset = now.get_day_of_week() - 1;
             d = now.add_days(-offset);
             while (d.format('%Y-%m-%d') <= now.format('%Y-%m-%d')) {
@@ -131,6 +139,10 @@ export class UsageStore {
         if (this._autoSaveId) {
             GLib.source_remove(this._autoSaveId);
             this._autoSaveId = null;
+        }
+        if (this._settingsId) {
+            this._settings.disconnect(this._settingsId);
+            this._settingsId = null;
         }
         this._save();
     }

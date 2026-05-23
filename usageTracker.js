@@ -1,10 +1,9 @@
 import Shell from 'gi://Shell';
 
-const MAX_INTERVAL = 600;
-
 export class UsageTracker {
-    constructor(store) {
+    constructor(store, settings) {
         this._store = store;
+        this._settings = settings;
         this._lastTime = Date.now();
         this._appId = null;
         this._appName = null;
@@ -14,10 +13,14 @@ export class UsageTracker {
         );
     }
 
+    _getMaxInterval() {
+        return this._settings.get_int('max-interval');
+    }
+
     _onFocus(display) {
         let now = Date.now();
         let secs = (now - this._lastTime) / 1000;
-        secs = Math.min(secs, MAX_INTERVAL);
+        secs = Math.min(secs, this._getMaxInterval());
 
         if (this._appId && secs > 0)
             this._store.addTime(this._appId, this._appName, secs);
@@ -42,7 +45,7 @@ export class UsageTracker {
         }
         if (this._appId) {
             let secs = Math.min(
-                (Date.now() - this._lastTime) / 1000, MAX_INTERVAL
+                (Date.now() - this._lastTime) / 1000, this._getMaxInterval()
             );
             if (secs > 0)
                 this._store.addTime(this._appId, this._appName, secs);

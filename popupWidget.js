@@ -1,4 +1,5 @@
 import St from 'gi://St';
+import { gettext as _ } from 'resource:///org/gnome/shell/extensions/extension.js';
 import * as PopupMenu from 'resource:///org/gnome/shell/ui/popupMenu.js';
 
 const ROW_W = 230;
@@ -35,7 +36,7 @@ export class PopupWidget {
         let headerBox = new St.BoxLayout({vertical: true,
             style: 'padding: 4px 0;'});
         let title = new St.Label({
-            text: '屏幕使用时间',
+            text: _('Screen Time'),
             style: 'font-size: 13px; font-weight: 700;',
         });
         headerBox.add_child(title);
@@ -56,7 +57,7 @@ export class PopupWidget {
             let empty = new PopupMenu.PopupBaseMenuItem({activate: false});
             empty.track_hover = false;
             empty.add_child(new St.Label({
-                text: '暂无数据',
+                text: _('No Data'),
                 style: 'font-size: 12px; padding: 12px; color: #999;',
             }));
             this._menu.addMenuItem(empty);
@@ -119,10 +120,10 @@ export class PopupWidget {
 
     _addDateTabs() {
         let tabs = [
-            {range: 'today',     label: '今天'},
-            {range: 'yesterday', label: '昨天'},
-            {range: 'week',      label: '本周'},
-            {range: 'month',     label: '本月'},
+            {range: 'today',     label: _('Today')},
+            {range: 'yesterday', label: _('Yesterday')},
+            {range: 'week',      label: _('This Week')},
+            {range: 'month',     label: _('This Month')},
         ];
         let item = new PopupMenu.PopupBaseMenuItem({activate: false});
         item.track_hover = false;
@@ -149,20 +150,21 @@ export class PopupWidget {
     }
 
     _rangeLabel() {
-        switch (this._range) {
-        case 'today':     return '今天';
-        case 'yesterday': return '昨天';
-        case 'week':      return '本周';
-        case 'month':     return '本月';
-        }
-        return '';
+        let labels = {
+            today:     _('Today'),
+            yesterday: _('Yesterday'),
+            week:      _('This Week'),
+            month:     _('This Month'),
+        };
+        return labels[this._range] || '';
     }
 
     _formatTime(totalSecs) {
         let h = Math.floor(totalSecs / 3600);
         let m = Math.floor((totalSecs % 3600) / 60);
-        if (h > 0) return h + 'h ' + m + 'm';
-        return m + 'm';
+        if (h > 0)
+            return h + _('h') + ' ' + m + _('m');
+        return m + _('m');
     }
 
     destroy() {

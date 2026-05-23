@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Screen Time — 菜单预览</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 40px;
+    min-height: 100vh;
+    background: #1e1e1e;
+    font-family: -apple-system, "SF Pro Text", "Noto Sans SC", sans-serif;
+  }
+  /* 模拟 GNOME panel-menu 暗色背景 */
+  .popup-menu {
+    width: 300px;
+    background: #2e2e2e;
+    border-radius: 8px;
+    padding: 8px 0;
+    color: #eee;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+  .popup-separator {
+    height: 1px;
+    background: rgba(255,255,255,0.08);
+    margin: 4px 8px;
+  }
+  /* === Header === */
+  .menu-header {
+    padding: 6px 12px;
+  }
+  .menu-header .title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #eee;
+  }
+  .menu-header .sub {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+  }
+  /* === App Row === */
+  .app-row {
+    padding: 6px 10px;
+  }
+  .app-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .app-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: #ddd;
+  }
+  .app-info {
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .app-bar-bg {
+    margin-top: 4px;
+    height: 3px;
+    background: rgba(255,255,255,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .app-bar-fill {
+    height: 3px;
+    border-radius: 2px;
+  }
+  /* === Empty === */
+  .empty-state {
+    padding: 16px;
+    font-size: 12px;
+    color: #999;
+    text-align: center;
+  }
+  /* === Date Tabs === */
+  .tabs-row {
+    padding: 2px 8px;
+    display: flex;
+    gap: 4px;
+  }
+  .tab-btn {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .tab-btn.active {
+    background: #3584e4;
+    color: #fff;
+  }
+  .tab-btn.inactive {
+    background: rgba(255,255,255,0.08);
+    color: #aaa;
+  }
+  .tab-btn.inactive:hover {
+    background: rgba(255,255,255,0.15);
+  }
+
+  /* === Legend === */
+  .legend {
+    margin-top: 16px;
+    padding: 12px;
+    background: #2e2e2e;
+    border-radius: 8px;
+    color: #888;
+    font-size: 12px;
+    line-height: 1.8;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  }
+</style>
+</head>
+<body>
+<div style="display:flex; flex-direction:column; align-items:center; gap: 12px;">
+
+  <!-- 今天：有数据 -->
+  <div class="popup-menu">
+    <!-- Header -->
+    <div class="menu-header">
+      <div class="title">屏幕使用时间</div>
+      <div class="sub">今天 3h 25m</div>
+    </div>
+    <div class="popup-separator"></div>
+    <!-- App Rows -->
+    <div class="app-row">
+      <div class="app-top">
+        <span class="app-name">Google Chrome</span>
+        <span class="app-info" style="color:#3584e4;">1h 20m · 39%</span>
+      </div>
+      <div class="app-bar-bg"><div class="app-bar-fill" style="width:39%; background:#3584e4;"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-top">
+        <span class="app-name">Visual Studio Code</span>
+        <span class="app-info" style="color:#33d17a;">55m · 27%</span>
+      </div>
+      <div class="app-bar-bg"><div class="app-bar-fill" style="width:27%; background:#33d17a;"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-top">
+        <span class="app-name">Terminal</span>
+        <span class="app-info" style="color:#e5a50a;">35m · 17%</span>
+      </div>
+      <div class="app-bar-bg"><div class="app-bar-fill" style="width:17%; background:#e5a50a;"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-top">
+        <span class="app-name">Files</span>
+        <span class="app-info" style="color:#9141ac;">20m · 10%</span>
+      </div>
+      <div class="app-bar-bg"><div class="app-bar-fill" style="width:10%; background:#9141ac;"></div></div>
+    </div>
+    <div class="app-row">
+      <div class="app-top">
+        <span class="app-name">Settings</span>
+        <span class="app-info" style="color:#ed333b;">15m · 7%</span>
+      </div>
+      <div class="app-bar-bg"><div class="app-bar-fill" style="width:7%; background:#ed333b;"></div></div>
+    </div>
+    <div class="popup-separator"></div>
+    <!-- Date Tabs -->
+    <div class="tabs-row">
+      <button class="tab-btn active">今天</button>
+      <button class="tab-btn inactive">昨天</button>
+      <button class="tab-btn inactive">本周</button>
+      <button class="tab-btn inactive">本月</button>
+    </div>
+  </div>
+
+  <!-- 昨天：无数据 -->
+  <div class="popup-menu">
+    <div class="menu-header">
+      <div class="title">屏幕使用时间</div>
+      <div class="sub">昨天 0m</div>
+    </div>
+    <div class="popup-separator"></div>
+    <div class="empty-state">暂无数据</div>
+    <div class="popup-separator"></div>
+    <div class="tabs-row">
+      <button class="tab-btn inactive">今天</button>
+      <button class="tab-btn active">昨天</button>
+      <button class="tab-btn inactive">本周</button>
+      <button class="tab-btn inactive">本月</button>
+    </div>
+  </div>
+
+  <!-- 图例 -->
+  <div class="legend">
+    <strong style="color:#ccc;">布局尺寸</strong><br>
+    菜单宽度: 260px (内容) + padding<br>
+    行内边距: 6px/10px<br>
+    进度条: 3px 高, 圆角 2px<br>
+    字号: 标题 14px, 应用 12px, 标签 11px
+  </div>
+
+</div>
+</body>
+</html>

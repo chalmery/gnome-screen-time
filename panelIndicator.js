@@ -1,39 +1,36 @@
 import St from 'gi://St';
+import GObject from 'gi://GObject';
 import * as PanelMenu from 'resource:///org/gnome/shell/ui/panelMenu.js';
 import * as Main from 'resource:///org/gnome/shell/ui/main.js';
 
-const DOT_BLUE = '#3584e4';
-const DOT_GRAY = '#999999';
+export const PanelIndicator = class extends PanelMenu.Button {
+    static {
+        GObject.registerClass(this);
+    }
 
-export class PanelIndicator {
-    constructor() {
-        this._button = new PanelMenu.Button(0.0, 'Screen Time', false);
-        this._dot = new St.Label({
-            text: '●',
-            y_align: St.Align.MIDDLE,
+    _init() {
+        super._init(0.0, 'Screen Time');
+
+        const hbox = new St.BoxLayout({
+            style_class: 'panel-status-menu-box',
         });
-        this._dot.set_style(
-            'font-size: 14px; color: ' + DOT_BLUE + ';'
-        );
-        this._button.add_child(this._dot);
+        this._icon = new St.Icon({
+            icon_name: 'preferences-system-time-symbolic',
+            style_class: 'system-status-icon',
+        });
+        hbox.add_child(this._icon);
+        this.add_child(hbox);
     }
 
     addToPanel(uuid) {
-        Main.panel.addToStatusArea(uuid, this._button);
+        Main.panel.addToStatusArea(uuid, this);
     }
 
     setTracking(active) {
-        this._dot.set_style(
-            'font-size: 14px; color: ' +
-            (active ? DOT_BLUE : DOT_GRAY) + ';'
-        );
-    }
-
-    get menu() {
-        return this._button.menu;
+        this._icon.opacity = active ? 255 : 128;
     }
 
     destroy() {
-        this._button.destroy();
+        super.destroy();
     }
-}
+};

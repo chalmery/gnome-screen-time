@@ -56,11 +56,10 @@ export class UsageStore {
     }
 
     _cleanup() {
-        let d = new Date();
-        d.setDate(d.getDate() - RETENTION_DAYS);
-        let cutoff = d.toISOString().split('T')[0];
+        let cutoff = GLib.DateTime.new_now_local().add_days(-RETENTION_DAYS);
+        let cutoffKey = cutoff.format('%Y-%m-%d');
         for (let key in this._data) {
-            if (key < cutoff) {
+            if (key < cutoffKey) {
                 delete this._data[key];
                 this._dirty = true;
             }
@@ -68,7 +67,7 @@ export class UsageStore {
     }
 
     addTime(appId, displayName, seconds) {
-        let today = new Date().toISOString().split('T')[0];
+        let today = GLib.DateTime.new_now_local().format('%Y-%m-%d');
         if (!this._data[today])
             this._data[today] = {};
         if (!this._data[today][appId])
@@ -79,8 +78,7 @@ export class UsageStore {
     }
 
     getUsage(range) {
-        let now = new Date();
-        let dates = this._datesFor(range, now);
+        let dates = this._datesFor(range, GLib.DateTime.new_now_local());
         let agg = {};
         for (let date of dates) {
             let day = this._data[date];
@@ -92,9 +90,8 @@ export class UsageStore {
             }
         }
         let result = [];
-        for (let id in agg) {
+        for (let id in agg)
             result.push({ appId: id, ...agg[id] });
-        }
         result.sort((a, b) => b.seconds - a.seconds);
         return result;
     }
@@ -104,27 +101,26 @@ export class UsageStore {
         let d;
         switch (range) {
         case 'today':
-            dates.push(now.toISOString().split('T')[0]);
+            dates.push(now.format('%Y-%m-%d'));
             break;
         case 'yesterday':
-            d = new Date(now); d.setDate(d.getDate() - 1);
-            dates.push(d.toISOString().split('T')[0]);
+            dates.push(now.add_days(-1).format('%Y-%m-%d'));
             break;
         case 'week': {
-            let dow = now.getDay();
-            let offset = dow === 0 ? 6 : dow - 1;
-            d = new Date(now); d.setDate(d.getDate() - offset);
-            while (d <= now) {
-                dates.push(d.toISOString().split('T')[0]);
-                d.setDate(d.getDate() + 1);
+            // GLib: 1=Mon ... 7=Sun; offset days back to Monday
+            let offset = now.get_day_of_week() - 1;
+            d = now.add_days(-offset);
+            while (d.format('%Y-%m-%d') <= now.format('%Y-%m-%d')) {
+                dates.push(d.format('%Y-%m-%d'));
+                d = d.add_days(1);
             }
             break;
         }
         case 'month':
-            d = new Date(now.getFullYear(), now.getMonth(), 1);
-            while (d <= now) {
-                dates.push(d.toISOString().split('T')[0]);
-                d.setDate(d.getDate() + 1);
+            d = GLib.DateTime.new_local(now.get_year(), now.get_month(), 1, 0, 0, 0);
+            while (d.format('%Y-%m-%d') <= now.format('%Y-%m-%d')) {
+                dates.push(d.format('%Y-%m-%d'));
+                d = d.add_days(1);
             }
             break;
         }

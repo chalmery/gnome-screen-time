@@ -2,7 +2,8 @@
   "name": "Screen Time",
   "description": "Track application usage time in GNOME panel",
   "uuid": "screen-time@chalmery",
-  "shell-version": ["47", "48","49", "50"],
-  "version": 1,
-  "url": "https://github.com/chalmery/gnome-screen-time"
+  "shell-version": ["47", "48", "49", "50"],
+  "version": 2,
+  "url": "https://github.com/chalmery/gnome-screen-time",
+  "settings-schema": "org.gnome.shell.extensions.screen-time"
 }

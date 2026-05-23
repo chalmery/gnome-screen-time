@@ -12,9 +12,12 @@ translations:
 	msgfmt po/en.po -o locale/en/LC_MESSAGES/screen-time@chalmery.mo
 
 install:
-	mkdir -p $(EXT_DIR)
-	cp -r extension.js metadata.json panelIndicator.js popupWidget.js \
-	      usageStore.js usageTracker.js prefs.js schemas/ locale/ $(EXT_DIR)/
+	mkdir -p $(EXT_DIR)/schemas
+	cp extension.js metadata.json panelIndicator.js popupWidget.js \
+	   usageStore.js usageTracker.js prefs.js $(EXT_DIR)/
+	cp schemas/*.xml $(EXT_DIR)/schemas/
+	cp -r locale/ $(EXT_DIR)/
+	glib-compile-schemas $(EXT_DIR)/schemas/
 
 clean:
 	rm -f schemas/gschemas.compiled

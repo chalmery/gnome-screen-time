@@ -162,9 +162,12 @@ export class PopupWidget {
     _formatTime(totalSecs) {
         let h = Math.floor(totalSecs / 3600);
         let m = Math.floor((totalSecs % 3600) / 60);
+        let s = Math.floor(totalSecs % 60);
         if (h > 0)
             return h + _('h') + ' ' + m + _('m');
-        return m + _('m');
+        if (m > 0)
+            return m + _('m') + ' ' + s + _('s');
+        return s + _('s');
     }
 
     destroy() {

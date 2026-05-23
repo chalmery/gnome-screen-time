@@ -35,6 +35,9 @@ msgstr "h"
 msgid "m"
 msgstr "m"
 
+msgid "s"
+msgstr "s"
+
 msgid "Data Retention"
 msgstr "Data Retention"
 

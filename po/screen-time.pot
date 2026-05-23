@@ -32,3 +32,39 @@ msgstr ""
 
 msgid "m"
 msgstr ""
+
+msgid "Data Retention"
+msgstr ""
+
+msgid "Retention Days"
+msgstr ""
+
+msgid "Number of days to keep usage data. 0 = keep forever."
+msgstr ""
+
+msgid "Tracking"
+msgstr ""
+
+msgid "Max Interval"
+msgstr ""
+
+msgid "Maximum seconds between focus events before capping."
+msgstr ""
+
+msgid "Language"
+msgstr ""
+
+msgid "Requires restarting the extension to take effect."
+msgstr ""
+
+msgid "System Default"
+msgstr ""
+
+msgid "Chinese"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "Interface Language"
+msgstr ""

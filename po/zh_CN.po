@@ -11,6 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+# popupWidget.js
 msgid "Screen Time"
 msgstr "屏幕使用时间"
 
@@ -34,3 +35,40 @@ msgstr "小时"
 
 msgid "m"
 msgstr "分钟"
+
+# prefs.js
+msgid "Data Retention"
+msgstr "数据保留"
+
+msgid "Retention Days"
+msgstr "保留天数"
+
+msgid "Number of days to keep usage data. 0 = keep forever."
+msgstr "使用数据保留天数，0 表示永久保存。"
+
+msgid "Tracking"
+msgstr "追踪"
+
+msgid "Max Interval"
+msgstr "最大采样间隔"
+
+msgid "Maximum seconds between focus events before capping."
+msgstr "两次焦点事件之间的最大计时间隔（秒），超出部分将被截断。"
+
+msgid "Language"
+msgstr "语言"
+
+msgid "Requires restarting the extension to take effect."
+msgstr "需要重新启用扩展才能生效。"
+
+msgid "System Default"
+msgstr "默认"
+
+msgid "Chinese"
+msgstr "中文"
+
+msgid "English"
+msgstr "English"
+
+msgid "Interface Language"
+msgstr "界面语言"

@@ -17,6 +17,6 @@ install:
 	      usageStore.js usageTracker.js prefs.js schemas/ locale/ $(EXT_DIR)/
 
 clean:
-	rm -f schemas/gschema.compiled
+	rm -f schemas/gschemas.compiled
 	rm -f locale/zh_CN/LC_MESSAGES/screen-time@chalmery.mo
 	rm -f locale/en/LC_MESSAGES/screen-time@chalmery.mo

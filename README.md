@@ -2,8 +2,13 @@
 
 <p align="center">
   <img src="assets/image.png" alt="Screen Time" width="400">
+
+</p>
+
+<p align="center">
   <img src="assets/settings-image.png" alt="Settings" width="400">
 </p>
+
 
 GNOME Shell 面板上的应用使用时间追踪器
 

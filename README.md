@@ -42,7 +42,3 @@ make install
 ```
 
 重启 GNOME Shell（`Alt+F2` → `r`），在「扩展」应用中启用即可。
-
-## 开源协议
-
-MIT
